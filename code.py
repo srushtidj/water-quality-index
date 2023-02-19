@@ -14,4 +14,4 @@ ars_input = st.number_input("Arsenic content (mg/L)", step=0.5)
 
 wqi = int(temp_input+pH_input+sal_input+nitro_input+ars_input)/5
 
-st.header(f'WQI: {wqi}')
+st.header(f'WQI: this is water quality index: {wqi}')

@@ -11,7 +11,7 @@ pH_input = st.number_input("pH", step=0.5)
 bod_input = st.number_input("Biochemical Oxygen Demand (mg/L)", step=0.5)
 cod_input = st.number_input("Chemical Oxygen Demand (mg/L)", step=0.5)
 tss_input = st.number_input("Total Suspended Solids (mg/L)", step=0.5)
-fc_input = st.number_input("Fecal Coliform (MPN*10^7)", step=0.5)
+fc_input = st.number_input("Fecal Coliform (MPN/100 ml)", step=0.5)
 # nit_input = st.number_input("Nitrate (mg/L)", step=0.5)
 
 temp = abs(temp_input-26.0125)

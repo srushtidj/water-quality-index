@@ -6,40 +6,55 @@ import plotly.express as px
 st.write('## Water Quality dashboard')
 # st.markdown(''' This is a dashboard showing the water quality of the given sample.''')
 
-temp = st.number_input("Temperature (°C)", step=0.5)
-pH = st.number_input("pH", step=0.5)
-bod = st.number_input("Biochemical Oxygen Demand (mg/L)", step=0.5)
-cod= st.number_input("Chemical Oxygen Demand (mg/L)", step=0.5)
-tss = st.number_input("Total Suspended Solids (mg/L)", step=0.5)
-fc = st.number_input("Fecal Coliform (MPN/100 ml)", step=0.5)
-
-# nit_input = st.number_input("Nitrate (mg/L)", step=0.5)
-
-# temp = abs(temp_input-26.0125)
-# pH = abs(pH_input-7.3125)
-# bod = abs(bod_input-9)
-# cod = abs(cod_input-1231.25)
-# tss = abs(tss_input-4.175)
-# fc = abs(fc_input)
+# INPUT VALUES
+temp_in = st.number_input("Temperature (°C)", step=0.5)
+pH_in = st.number_input("pH", step=0.5)
+bod_in = st.number_input("Biochemical Oxygen Demand (mg/L)", step=0.5)
+cod_in= st.number_input("Chemical Oxygen Demand (mg/L)", step=0.5)
+tss_in = st.number_input("Total Suspended Solids (mg/L)", step=0.5)
+fc_in = st.number_input("Fecal Coliform (MPN/100 ml)", step=0.5)
 
 
-# sub_temp = abs(100- (temp*100/(30-20)))
-# sub_pH = abs(100 - (pH*100/(8.5-6.5)))
-# sub_bod = abs(100 - (bod*100/14))
-# sub_cod = abs(100 - (cod*100/(2000-700)))
-# sub_tss = abs(100 - (tss*100/10))
-# sub_fc = abs()
+# SUB-INDEX CALCULATION:
 
-w_temp = 0.226
-w_pH = 0.156
-w_bod = 0.097
-w_cod = 0.275
-w_tss = 0.087
-w_fc = 0.157
+## Temperature:
+if temp_in>=0 and temp_in<=25:
+    temp = abs(((((1-0.6)*(temp_in - 18))/(25-18))+0.6)*100)
+else:
+    temp = abs((((-0.44)*(temp_in -25)/9) + 0.49)*100)
+
+## pH:
+ph = abs(((0.2*(pH_in - 7.5)/1.5)+0.8)*100)
+
+## BOD:
+bod = abs(((0.2*(bod_in - 5)/5)+0.8)*100)
+
+## COD:
+cod = abs(((0.2*(cod_in - 20)/30)+0.8)*100)
+
+## TSS:
+if tss_in>=0 and tss_in<=10:
+    tss = abs(((0.4*(tss_in - 3)/7)+0.6)*100)
+else:
+    tss = abs(((-0.44)*(tss_in - 10)/9)*100)
+
+## Fecal Coliform:
+fc = abs((((-0.44)*(fc_in - 230)/530)+0.49)*100)
 
 
-wqi = ((temp**w_temp)*(pH**w_pH)*(bod**w_bod)*(cod**w_cod)*(tss**w_tss)*(fc**w_fc))
+# WEIGHTAGE OF EACH PARAMETER:
+w_temp = 0.237710643
+w_pH = 0.164377828
+w_bod = 0.102280499
+w_cod = 0.290074603
+w_tss = 0.091850428
+w_fc = 0.113705998
+
+
+wqi = ((temp**w_temp)*(ph**w_pH)*(bod**w_bod)*(cod**w_cod)*(tss**w_tss)*(fc**w_fc))
 wqi = round(wqi,2)
+
+# CLASSIFY BASED ON WQI:
 
 if wqi!=0:
     st.header(f'WQI: {wqi}')
@@ -48,9 +63,9 @@ if wqi!=0:
         st.markdown('Water Quality Status: Heavily Polluted')
     elif wqi>=20 and wqi<40:
         st.markdown('Water Quality Status: Poor')
-    elif wqi>=40 and wqi<80:
+    elif wqi>=40 and wqi<60:
         st.markdown('Water Quality Status: Fair')
-    elif wqi>=80 and wqi<100:
+    elif wqi>=60 and wqi<80:
         st.markdown('Water Quality Status: Good')
-    elif wqi == 100:
+    elif wqi>=80 and wqi<100:
         st.markdown('Water Quality Status: Excellent')

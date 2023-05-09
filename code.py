@@ -2,9 +2,9 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+st.markdown('# WATER QUALITY DASHBOARD')
+st.markdown(''' This is a dashboard showing the water quality of the given sample based on the following parameters.''')
 
-st.write('## Water Quality dashboard')
-# st.markdown(''' This is a dashboard showing the water quality of the given sample.''')
 
 # INPUT VALUES
 temp_in = st.number_input("Temperature (°C)", step=0.5)
@@ -60,12 +60,12 @@ if wqi!=0:
     st.header(f'WQI: {wqi}')
 
     if wqi>=0 and wqi<20:
-        st.markdown('Water Quality Status: Heavily Polluted')
+        st.header('Water Quality Status: Heavily Polluted')
     elif wqi>=20 and wqi<40:
-        st.markdown('Water Quality Status: Poor')
+        st.header('Water Quality Status: Poor')
     elif wqi>=40 and wqi<60:
-        st.markdown('Water Quality Status: Fair')
+        st.header('Water Quality Status: Fair')
     elif wqi>=60 and wqi<80:
-        st.markdown('Water Quality Status: Good')
+        st.header('Water Quality Status: Good')
     elif wqi>=80 and wqi<100:
-        st.markdown('Water Quality Status: Excellent')
+        st.header('Water Quality Status: Excellent')
